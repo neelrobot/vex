@@ -2,6 +2,7 @@
 from vex import *
 import urandom
 
+##
 # Brain should be defined by default
 brain=Brain()
 
@@ -128,4 +129,3 @@ while True:
         if drivetrain_r_needs_to_be_stopped_controller_1:
             right_drive_smart.set_velocity(drivetrain_right_side_speed, PERCENT)
             right_drive_smart.spin(FORWARD)
-
