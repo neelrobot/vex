@@ -14,9 +14,9 @@ from vex import *
 brain = Brain()
 inertial = Inertial(Ports.PORT20) #Example port, change after building robot
 controller_1 = Controller(PRIMARY)
-intake_motor1 = Motor(Ports.PORT4, GearSetting.RATIO_6_1, True)
-intake_motor2 = Motor(Ports.PORT5, GearSetting.RATIO_18_1, True)
-intake = MotorGroup(intake_motor1, intake_motor2)
+intake_chain = Motor(Ports.PORT4, GearSetting.RATIO_6_1, False)
+intake_arm = Motor(Ports.PORT5, GearSetting.RATIO_18_1, False)
+intake = MotorGroup(intake_chain, intake_arm)
 intake.set_velocity(100, PERCENT) #Make sure intake always runs at full speed
 enableturnPID = False #Condition for turn PID loop
 enablePID = False
