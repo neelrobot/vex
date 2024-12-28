@@ -14,8 +14,8 @@ from vex import *
 brain = Brain()
 inertial = Inertial(Ports.PORT20) #Example port, change after building robot
 controller_1 = Controller(PRIMARY)
-intake_chain = Motor(Ports.PORT4, GearSetting.RATIO_6_1, False)
-intake_arm = Motor(Ports.PORT5, GearSetting.RATIO_18_1, False)
+intake_chain = Motor(Ports.PORT2, GearSetting.RATIO_6_1, False)
+intake_arm = Motor(Ports.PORT1, GearSetting.RATIO_18_1, False)
 intake = MotorGroup(intake_chain, intake_arm)
 intake.set_velocity(100, PERCENT) #Make sure intake always runs at full speed
 enableturnPID = False #Condition for turn PID loop
@@ -23,13 +23,13 @@ enablePID = False
 goal_clamp = DigitalOut(brain.three_wire_port.h)
 
 #6-motor drivetrain initialization
-left_motor_a = Motor(Ports.PORT11, GearSetting.RATIO_6_1, True)
-left_motor_b = Motor(Ports.PORT12, GearSetting.RATIO_6_1, True)
-left_motor_c = Motor(Ports.PORT13, GearSetting.RATIO_6_1, True)
+left_motor_a = Motor(Ports.PORT5, GearSetting.RATIO_6_1, True)
+left_motor_b = Motor(Ports.PORT6, GearSetting.RATIO_6_1, True)
+left_motor_c = Motor(Ports.PORT7, GearSetting.RATIO_6_1, True)
 left_drive_smart = MotorGroup(left_motor_a, left_motor_b, left_motor_c)
-right_motor_a = Motor(Ports.PORT1, GearSetting.RATIO_6_1, False)
-right_motor_b = Motor(Ports.PORT2, GearSetting.RATIO_6_1, False)
-right_motor_c = Motor(Ports.PORT3, GearSetting.RATIO_6_1, False)
+right_motor_a = Motor(Ports.PORT8, GearSetting.RATIO_6_1, False)
+right_motor_b = Motor(Ports.PORT9, GearSetting.RATIO_6_1, False)
+right_motor_c = Motor(Ports.PORT10, GearSetting.RATIO_6_1, False)
 right_drive_smart = MotorGroup(right_motor_a, right_motor_b, right_motor_c)
 drivetrain = DriveTrain(left_drive_smart, right_drive_smart, 299.24, 273.05, 266.7, MM, 0.75)
 #drivetrain1 = DriveTrain(left_drive_smart, right_drive_smart, 260, idk, idk, MM, 0.75)
