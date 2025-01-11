@@ -134,7 +134,7 @@ def temp_monitor():
         brain.screen.print(right_motor_b.temperature(TemperatureUnits.FAHRENHEIT))
         brain.screen.next_row()
         brain.screen.print(right_motor_c.temperature(TemperatureUnits.FAHRENHEIT))
-        wait(20, MSEC)
+        wait(5, SECONDS)
 
 motor_temp = Thread(temp_monitor)
 
