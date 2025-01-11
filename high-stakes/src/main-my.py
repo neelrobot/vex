@@ -119,6 +119,25 @@ def auton():
 def user_control():
     user_control_loop = Thread(input_monitoring)
 
+def temp_monitor():
+    while True:
+        brain.screen.clear_screen()
+        brain.screen.set_cursor(1,1)
+        brain.screen.print(left_motor_a.temperature(TemperatureUnits.FAHRENHEIT))
+        brain.screen.next_row()
+        brain.screen.print(left_motor_b.temperature(TemperatureUnits.FAHRENHEIT))
+        brain.screen.next_row()
+        brain.screen.print(left_motor_c.temperature(TemperatureUnits.FAHRENHEIT))
+        brain.screen.next_row()
+        brain.screen.print(right_motor_a.temperature(TemperatureUnits.FAHRENHEIT))
+        brain.screen.next_row()
+        brain.screen.print(right_motor_b.temperature(TemperatureUnits.FAHRENHEIT))
+        brain.screen.next_row()
+        brain.screen.print(right_motor_c.temperature(TemperatureUnits.FAHRENHEIT))
+        wait(20, MSEC)
+
+motor_temp = Thread(temp_monitor)
+
 #Function for lateral PID, needs thread
 def PIDControlFn(target):
     kP = 0 #tune
