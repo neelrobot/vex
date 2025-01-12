@@ -109,12 +109,14 @@ remote_control_code_enabled = True
 control_loop = Thread(input_monitoring)
 
 def pre_auton():
-    inertial.calibrate()
-    wait(2, SECONDS)
-    inertial.set_rotation(0, DEGREES)
+    #inertial.calibrate()
+    #wait(2, SECONDS)
+    #inertial.set_rotation(0, DEGREES)
+    intake.set_velocity(100, PERCENT) #Make sure intake always runs at full speed
 
 def auton():
     pre_auton()
+    intake_chain.spin_for(FORWARD, 2, SECONDS)
 
 def user_control():
     user_control_loop = Thread(input_monitoring)
