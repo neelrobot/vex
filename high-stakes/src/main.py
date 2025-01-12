@@ -116,7 +116,7 @@ def pre_auton():
 
 def auton():
     pre_auton()
-    intake_chain.spin_for(FORWARD, 1, SECONDS)
+    intake_chain.spin_for(FORWARD, 1.5, SECONDS)
     intake_chain.spin_for(REVERSE, 250, MSEC)
     intake.stop()
 
