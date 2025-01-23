@@ -31,8 +31,7 @@ right_motor_a = Motor(Ports.PORT4, GearSetting.RATIO_6_1, False)
 right_motor_b = Motor(Ports.PORT5, GearSetting.RATIO_6_1, False)
 right_motor_c = Motor(Ports.PORT6, GearSetting.RATIO_6_1, False)
 right_drive_smart = MotorGroup(right_motor_a, right_motor_b, right_motor_c)
-drivetrain = DriveTrain(left_drive_smart, right_drive_smart, 299.24, 273.05, 266.7, MM, 0.75)
-#drivetrain1 = DriveTrain(left_drive_smart, right_drive_smart, 260, idk, idk, MM, 0.75)
+drivetrain = DriveTrain(left_drive_smart, right_drive_smart, 10, 12.75, 10.625, INCHES, 0.75)
 
 
 def input_monitoring():
@@ -144,7 +143,7 @@ motor_temp = Thread(temp_monitor)
 
 #Function for lateral PID, needs thread
 def PIDControlFn(target):
-    kP = 0 #tune
+    kP = 0.01 #tune
     kI = 0 #tune
     kD = 0 #tune
 
