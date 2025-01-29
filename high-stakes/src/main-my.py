@@ -21,6 +21,8 @@ intake.set_velocity(100, PERCENT) #Make sure intake always runs at full speed
 enableturnPID = False #Condition for turn PID loop
 enablePID = False
 goal_clamp = DigitalOut(brain.three_wire_port.h)
+macro_speed_factor = 1
+goal_clamp_clamped = False
 
 #6-motor drivetrain initialization
 left_motor_a = Motor(Ports.PORT1, GearSetting.RATIO_6_1, True)
@@ -38,7 +40,6 @@ def input_monitoring():
    drivetrain_l_needs_to_be_stopped_controller_1 = False
    drivetrain_r_needs_to_be_stopped_controller_1 = False
    intake_stopped = True
-   goal_clamp_clamped = False
    while True:
 
 
@@ -77,11 +78,11 @@ def input_monitoring():
           
            # only tell the left drive motor to spin if the values are not in the deadband range
            if drivetrain_l_needs_to_be_stopped_controller_1:
-               left_drive_smart.set_velocity(drivetrain_left_side_speed, PERCENT)
+               left_drive_smart.set_velocity(drivetrain_left_side_speed/macro_speed_factor, PERCENT)
                left_drive_smart.spin(FORWARD)
            # only tell the right drive motor to spin if the values are not in the deadband range
            if drivetrain_r_needs_to_be_stopped_controller_1:
-               right_drive_smart.set_velocity(drivetrain_right_side_speed, PERCENT)
+               right_drive_smart.set_velocity(drivetrain_right_side_speed/macro_speed_factor, PERCENT)
                right_drive_smart.spin(FORWARD)
             
            #conditions to continously check for right shoulder button input and spin intake if so
@@ -94,15 +95,11 @@ def input_monitoring():
            elif not intake_stopped:
                intake.stop()
 
-           if controller_1.buttonL1.pressing():
-                if not goal_clamp_clamped:
-                    goal_clamp.set(True)
-                    goal_clamp_clamped = True
-                    wait(250, MSEC)
-                elif goal_clamp_clamped:
-                    goal_clamp.set(False)
-                    goal_clamp_clamped = False
-                    wait(250, MSEC)
+           controller_1.buttonL1.pressed(goal_clamper)
+
+           controller_1.buttonL2.pressed(speed_factor_down)
+
+           controller_1.buttonUp.pressed(reset_speed_factor)
                 
 remote_control_code_enabled = True
 control_loop = Thread(input_monitoring)
@@ -121,6 +118,25 @@ def auton():
 
 def user_control():
     user_control_loop = Thread(input_monitoring)
+
+def goal_clamper():
+    global goal_clamp_clamped
+    if not goal_clamp_clamped:
+        goal_clamp.set(True)
+        goal_clamp_clamped = True
+        wait(15, MSEC)
+    elif goal_clamp_clamped:
+        goal_clamp.set(False)
+        goal_clamp_clamped = False
+        wait(15, MSEC)
+
+def speed_factor_down():
+    global macro_speed_factor
+    macro_speed_factor += 3
+
+def reset_speed_factor():
+    global macro_speed_factor
+    macro_speed_factor = 1
 
 def temp_monitor():
     while True:
