@@ -17,6 +17,7 @@ controller_1 = Controller(PRIMARY)
 intake_chain = Motor(Ports.PORT7, GearSetting.RATIO_6_1, False)
 intake_arm = Motor(Ports.PORT8, GearSetting.RATIO_18_1, False)
 intake = MotorGroup(intake_chain, intake_arm)
+arm = Motor(Ports.PORT9, GearSetting.RATIO_18_1, False)
 intake.set_velocity(100, PERCENT) #Make sure intake always runs at full speed
 enableturnPID = False #Condition for turn PID loop
 enablePID = False
@@ -108,7 +109,7 @@ def pre_auton():
     #inertial.calibrate()
     #wait(2, SECONDS)
     #inertial.set_rotation(0, DEGREES)
-    intake.set_velocity(100, PERCENT) #Make sure intake always runs at full speed
+    intake.set_velocity(100, PERCENT) #Make sure intake always runs at full speed 
 
 def auton():
     pre_auton()
@@ -118,6 +119,26 @@ def auton():
 
 def user_control():
     user_control_loop = Thread(input_monitoring)
+
+def arm_set_zero():
+    arm.set_position(0, DEGREES)
+
+def arm_set():
+    arm.set_velocity(25, PERCENT)
+    arm.spin_to_position(145, DEGREES)
+
+def arm_goal():
+    arm.set_velocity(25, PERCENT)
+    arm.spin_to_position(840, DEGREES)
+
+def arm_reset():
+    arm.set_velocity(50, PERCENT)
+    arm.spin_to_position(0, DEGREES)
+
+def arm_failsafe():
+    arm.spin(REVERSE)
+    wait(1, SECONDS)
+    arm.stop()
 
 def goal_clamper():
     global goal_clamp_clamped
