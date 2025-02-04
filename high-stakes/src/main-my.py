@@ -98,10 +98,17 @@ def input_monitoring():
 
            controller_1.buttonL1.pressed(goal_clamper)
 
+           #drive speed macros
            controller_1.buttonL2.pressed(speed_factor_down)
-
            controller_1.buttonUp.pressed(reset_speed_factor)
-                
+
+           #arm macros
+           controller_1.buttonDown.pressed(arm_set_zero)
+           controller_1.buttonA.pressed(arm_set)
+           controller_1.buttonB.pressed(arm_goal)
+           controller_1.buttonY.pressed(arm_reset)
+           controller_1.buttonLeft.pressed(arm_failsafe)
+           
 remote_control_code_enabled = True
 control_loop = Thread(input_monitoring)
 
